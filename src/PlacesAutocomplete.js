@@ -122,10 +122,9 @@ class PlacesAutocomplete extends Component {
       this.selectActiveItemAtIndex(0)
     } else if (activeItem.index === this.state.autocompleteItems.length - 1) {
       this.setState({
-        autocompleteItems: this.state.autocompleteItems.map(item => ({
-          ...item,
-          active: false
-        }))
+        autocompleteItems: this.state.autocompleteItems.map((item, idx) => {
+          return (activeItem.index === idx) ? {...item, active: false} : item
+        })
       })
       this.props.inputProps.onChange(this.state.oldInput);
     } else {
@@ -145,10 +144,9 @@ class PlacesAutocomplete extends Component {
       this.selectActiveItemAtIndex(this.state.autocompleteItems.length - 1)
     } else if (activeItem.index === 0) {
       this.setState({
-        autocompleteItems: this.state.autocompleteItems.map(item => ({
-          ...item,
-          active: false
-        }))
+        autocompleteItems: this.state.autocompleteItems.map((item, idx) => {
+          return (activeItem.index === idx) ? {...item, active: false} : item
+        })
       });
       this.props.inputProps.onChange(this.state.oldInput);
     } else {
