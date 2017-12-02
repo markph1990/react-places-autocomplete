@@ -13,7 +13,7 @@ class PlacesAutocomplete extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { autocompleteItems: [] }
+    this.state = { autocompleteItems: [], oldInput: "" }
 
     this.autocompleteCallback = this.autocompleteCallback.bind(this)
     this.handleInputKeyDown = this.handleInputKeyDown.bind(this)
@@ -118,7 +118,16 @@ class PlacesAutocomplete extends Component {
 
     const activeItem = this.getActiveItem()
     if (activeItem === undefined) {
+      this.setState({ oldInput: this.props.inputProps.value })
       this.selectActiveItemAtIndex(0)
+    } else if (activeItem.index === this.state.autocompleteItems.length - 1) {
+      this.setState({
+        autocompleteItems: this.state.autocompleteItems.map(item => ({
+          ...item,
+          active: false
+        }))
+      })
+      this.props.inputProps.onChange(this.state.oldInput);
     } else {
       const nextIndex = (activeItem.index + 1) % this.state.autocompleteItems.length
       this.selectActiveItemAtIndex(nextIndex)
@@ -132,7 +141,16 @@ class PlacesAutocomplete extends Component {
 
     const activeItem = this.getActiveItem()
     if (activeItem === undefined) {
+      this.setState({ oldInput: this.props.inputProps.value });
       this.selectActiveItemAtIndex(this.state.autocompleteItems.length - 1)
+    } else if (activeItem.index === 0) {
+      this.setState({
+        autocompleteItems: this.state.autocompleteItems.map(item => ({
+          ...item,
+          active: false
+        }))
+      });
+      this.props.inputProps.onChange(this.state.oldInput);
     } else {
       let prevIndex
       if (activeItem.index === 0) {
