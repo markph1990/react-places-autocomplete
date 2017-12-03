@@ -316,6 +316,24 @@ describe('save and include original input value when iterating over autocomplete
       expect(item.active).to.be.false
     })
   })
+
+  it('onChange function is fired with appropriate value', () => {
+    // Amount of entries is 3 for this test case, so when we press arrow down fourth time
+    // we expect onChange function to be called with original input value
+    // being stored in `insertedInputValue` state entry
+    // rest of calls should be called with appropraite entries from autocomplete items
+    const spy = sinon.spy()
+    wrapper = shallow(<PlacesAutocomplete inputProps={{...inputProps, onChange: spy }} />)
+    wrapper.setState({ autocompleteItems: data })
+    wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
+    wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
+    wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
+    wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
+    expect(spy.getCall(0).args[0]).to.equal(data[0].suggestion)
+    expect(spy.getCall(1).args[0]).to.equal(data[1].suggestion)
+    expect(spy.getCall(2).args[0]).to.equal(data[2].suggestion)
+    expect(spy.getCall(3).args[0]).to.equal(wrapper.state().insertedInputValue)
+  })
 })
 
 // TODOs:
