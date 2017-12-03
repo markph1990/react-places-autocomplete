@@ -177,6 +177,7 @@ class PlacesAutocomplete extends Component {
         break
       case 'Escape':
         this.clearAutocomplete()
+        this.props.clearOnEscape && this.props.inputProps.onChange(this.state.insertedInputValue);
         break
     }
 
