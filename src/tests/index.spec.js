@@ -344,5 +344,71 @@ describe('save and include original input value when iterating over autocomplete
   })
 })
 
+describe('save and include original input value when iterating over autocomplete entries', () => {
+  const data = [
+    {
+      suggestion: 'San Francisco, CA',
+      placeId: 1,
+      active: false,
+      index: 0
+    },
+    {
+      suggestion: 'San Jose, CA',
+      placeId: 2,
+      active: false,
+      index: 1
+    },
+    {
+      suggestion: 'San Diego, CA',
+      placeId: 3,
+      active: false,
+      index: 2
+    }
+  ]
+  const inputProps = {
+    value: 'san',
+    onChange: () => {}
+  }
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallow(<PlacesAutocomplete inputProps={inputProps} />)
+  })
+
+  it('save value of input when pressing arrow down key and none of autocomplete entries is being focused', () => {
+    wrapper.setState({ autocompleteItems: data })
+    wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
+    expect(wrapper.state().insertedInputValue).to.equal("san")
+  })
+
+  it('save value of input when pressing arrow up key and none of autocomplete entries is being focused', () => {
+    wrapper.setState({ autocompleteItems: data })
+    wrapper.instance().handleInputKeyDown({key: 'ArrowUp', preventDefault: () => {}})
+    expect(wrapper.state().insertedInputValue).to.equal("san")
+  })
+
+  it('don\'t focus on any entry when focus is on last item and arrow down key is pressed', () => {
+    const lastItemActive = data.map((item, idx) => {
+      return idx === (data.length - 1) ? {...item, active: true} : item
+    })
+    wrapper.setState({ autocompleteItems: lastItemActive })
+    wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
+    wrapper.state().autocompleteItems.forEach(item => {
+      expect(item.active).to.be.false
+    })
+  })
+
+  it('don\'t focus on any entry when focus is on first item and arrow up key is pressed', () => {
+    const firstItemActive = data.map((item, idx) => {
+      return idx === 0 ? {...item, active: true} : item
+    })
+    wrapper.setState({ autocompleteItems: firstItemActive })
+    wrapper.instance().handleInputKeyDown({key: 'ArrowUp', preventDefault: () => {}})
+    wrapper.state().autocompleteItems.forEach(item => {
+      expect(item.active).to.be.false
+    })
+  })
+})
+
 // TODOs:
 // * Test geocodeByAddress function
