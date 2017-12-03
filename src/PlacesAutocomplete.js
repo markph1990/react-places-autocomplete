@@ -120,7 +120,7 @@ class PlacesAutocomplete extends Component {
     if (activeItem === undefined) {
       this.setState({ insertedInputValue: this.props.inputProps.value })
       this.selectActiveItemAtIndex(0)
-    } else if (activeItem.index === this.state.autocompleteItems.length - 1) {
+    } else if (this.props.includeInputValue && activeItem.index === this.state.autocompleteItems.length - 1) {
       this.setState({
         autocompleteItems: this.state.autocompleteItems.map((item, idx) => {
           return (activeItem.index === idx) ? {...item, active: false} : item
@@ -142,7 +142,7 @@ class PlacesAutocomplete extends Component {
     if (activeItem === undefined) {
       this.setState({ insertedInputValue: this.props.inputProps.value });
       this.selectActiveItemAtIndex(this.state.autocompleteItems.length - 1)
-    } else if (activeItem.index === 0) {
+    } else if (this.props.includeInputValue && activeItem.index === 0) {
       this.setState({
         autocompleteItems: this.state.autocompleteItems.map((item, idx) => {
           return (activeItem.index === idx) ? {...item, active: false} : item
@@ -356,6 +356,7 @@ PlacesAutocomplete.propTypes = {
   highlightFirstSuggestion: PropTypes.bool,
   googleLogo: PropTypes.bool,
   googleLogoType: PropTypes.oneOf(["default", "inverse"]),
+  includeInputValue: PropTypes.bool
 }
 
 PlacesAutocomplete.defaultProps = {
@@ -369,6 +370,7 @@ PlacesAutocomplete.defaultProps = {
   highlightFirstSuggestion: false,
   googleLogo: true,
   googleLogoType: 'default',
+  includeInputValue: false
 }
 
 export default PlacesAutocomplete

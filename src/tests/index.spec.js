@@ -273,14 +273,16 @@ describe('save and include original input value when iterating over autocomplete
       index: 2
     }
   ]
+  const spy = sinon.spy()
   const inputProps = {
     value: 'san',
-    onChange: () => {}
+    onChange: spy
   }
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<PlacesAutocomplete inputProps={inputProps} />)
+    wrapper = shallow(<PlacesAutocomplete inputProps={inputProps} includeInputValue />)
+    spy.reset()
   })
 
   it('save value of input when pressing arrow down key and none of autocomplete entries is being focused', () => {
@@ -322,8 +324,6 @@ describe('save and include original input value when iterating over autocomplete
     // we expect onChange function to be called with original input value
     // being stored in `insertedInputValue` state entry
     // rest of calls should be called with appropraite entries from autocomplete items
-    const spy = sinon.spy()
-    wrapper = shallow(<PlacesAutocomplete inputProps={{...inputProps, onChange: spy }} />)
     wrapper.setState({ autocompleteItems: data })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
