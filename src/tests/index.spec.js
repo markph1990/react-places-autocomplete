@@ -378,20 +378,20 @@ describe('save and include original input value when iterating over autocomplete
   })
 
   it('save value of input when pressing arrow down key and none of autocomplete entries is being focused', () => {
-    wrapper.setState({ autocompleteItems: data })
+    wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     expect(wrapper.state().insertedInputValue).to.equal("san")
   })
 
   it('save value of input when pressing arrow up key and none of autocomplete entries is being focused', () => {
-    wrapper.setState({ autocompleteItems: data })
+    wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowUp', preventDefault: () => {}})
     expect(wrapper.state().insertedInputValue).to.equal("san")
   })
 
   it('don\'t focus on any entry when focus is on last item and arrow down key is pressed', () => {
-    const lastItemActive = data.map((item, idx) => {
-      return idx === (data.length - 1) ? {...item, active: true} : item
+    const lastItemActive = testAutocompleteData.map((item, idx) => {
+      return idx === (testAutocompleteData.length - 1) ? {...item, active: true} : item
     })
     wrapper.setState({ autocompleteItems: lastItemActive })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
@@ -401,7 +401,7 @@ describe('save and include original input value when iterating over autocomplete
   })
 
   it('don\'t focus on any entry when focus is on first item and arrow up key is pressed', () => {
-    const firstItemActive = data.map((item, idx) => {
+    const firstItemActive = testAutocompleteData.map((item, idx) => {
       return idx === 0 ? {...item, active: true} : item
     })
     wrapper.setState({ autocompleteItems: firstItemActive })
@@ -416,19 +416,33 @@ describe('save and include original input value when iterating over autocomplete
     // we expect onChange function to be called with original input value
     // being stored in `insertedInputValue` state entry
     // rest of calls should be called with appropraite entries from autocomplete items
-    wrapper.setState({ autocompleteItems: data })
+    wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
-    expect(spy.getCall(0).args[0]).to.equal(data[0].suggestion)
-    expect(spy.getCall(1).args[0]).to.equal(data[1].suggestion)
-    expect(spy.getCall(2).args[0]).to.equal(data[2].suggestion)
+    expect(spy.getCall(0).args[0]).to.equal(testAutocompleteData[0].suggestion)
+    expect(spy.getCall(1).args[0]).to.equal(testAutocompleteData[1].suggestion)
+    expect(spy.getCall(2).args[0]).to.equal(testAutocompleteData[2].suggestion)
     expect(spy.getCall(3).args[0]).to.equal(wrapper.state().insertedInputValue)
+  })
+})
+
+describe('clearOnEscape prop', () => {
+  const spy = sinon.spy()
+  const inputProps = {
+    value: 'san',
+    onChange: spy
+  }
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallow(<PlacesAutocomplete inputProps={inputProps} includeInputValue clearOnEscape />)
+    spy.reset()
   })
 
   it('pressing escape button while one of autocomplete entries is active, it should restore input to its original value', () => {
-    wrapper.setState({ autocompleteItems: data })
+    wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     wrapper.instance().handleInputKeyDown({key: 'Escape', preventDefault: () => {}})
     expect(spy.getCall(1).args[0]).to.equal(wrapper.state().insertedInputValue)
