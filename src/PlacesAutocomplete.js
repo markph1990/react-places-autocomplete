@@ -176,6 +176,7 @@ class PlacesAutocomplete extends Component {
         break
       case 'Escape':
         this.clearAutocomplete()
+        this.props.clearOnEscape && this.props.inputProps.onChange(this.state.insertedInputValue);
         break
     }
 
@@ -356,7 +357,8 @@ PlacesAutocomplete.propTypes = {
   highlightFirstSuggestion: PropTypes.bool,
   googleLogo: PropTypes.bool,
   googleLogoType: PropTypes.oneOf(["default", "inverse"]),
-  includeInputValue: PropTypes.bool
+  includeInputValue: PropTypes.bool,
+  clearOnEscape: PropTypes.bool
 }
 
 PlacesAutocomplete.defaultProps = {
@@ -370,7 +372,8 @@ PlacesAutocomplete.defaultProps = {
   highlightFirstSuggestion: false,
   googleLogo: true,
   googleLogoType: 'default',
-  includeInputValue: false
+  includeInputValue: false,
+  clearOnEscape: false
 }
 
 export default PlacesAutocomplete
