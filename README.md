@@ -117,6 +117,8 @@ export default SimpleForm
 * [`highlightFirstSuggestion`](#highlightFirstSuggestion)
 * [`googleLogo`](#googleLogo)
 * [`googleLogoType`](#googleLogoType)
+* [`includeInputValue`](#includeInputValue)
+* [`restoreOrigValue`](#restoreOrigValue)
 
 <a name="inputProps"></a>
 #### inputProps
@@ -406,6 +408,26 @@ Default: `"default"`
 
 Allows you to pick right color theme for "powered by Google" logo.
 Please see Google's API page for more information: [https://developers.google.com/places/web-service/policies](https://developers.google.com/places/web-service/policies)
+
+<a name="includeInputValue"></a>
+#### includeInputValue
+Type: `Boolean`
+Required: `false`
+Default: `false`
+
+Enables storing original input value in local state, when you select some entry from autocomplete dropdown.
+When last entry is focused and you press down arrow (or vice versa with up arrow), instead of wrapping up,
+it doesn't focus on any of the entries, and instead shows original value in input field, which was saved to local state
+when any of entries was focused/selected and previously none of them were.
+
+<a name="restoreOrigValue"></a>
+#### restoreOrigValue
+Type: `Boolean`
+Required: `false`
+Default: `false`
+
+When firing method for clearing autocomplete, original value is restored in the input field, which was saved
+when none of the entries were chosen and you move cursor or press arrow up/down to choose one.
 
 <a name="utility-functions"></a>
 ## Utility Functions
