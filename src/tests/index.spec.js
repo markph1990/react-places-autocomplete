@@ -282,7 +282,7 @@ describe('save and include original input value when iterating over autocomplete
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<PlacesAutocomplete inputProps={inputProps} includeInputValue restoreOrigValue />)
+    wrapper = shallow(<PlacesAutocomplete inputProps={inputProps} saveOriginalValue restoreOriginalValueOnClear />)
     spy.reset()
   })
 
@@ -336,7 +336,7 @@ describe('save and include original input value when iterating over autocomplete
     expect(spy.getCall(3).args[0]).to.equal(wrapper.state().insertedInputValue)
   })
 
-  it('cleaning autocomplete will restore input to its original value (saved in local state as insertedInputValue)', () => {
+  it('clearing autocomplete will restore input to its original value (saved in local state as insertedInputValue)', () => {
     wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     wrapper.instance().handleInputKeyDown({key: 'Escape', preventDefault: () => {}})

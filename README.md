@@ -117,8 +117,8 @@ export default SimpleForm
 * [`highlightFirstSuggestion`](#highlightFirstSuggestion)
 * [`googleLogo`](#googleLogo)
 * [`googleLogoType`](#googleLogoType)
-* [`includeInputValue`](#includeInputValue)
-* [`restoreOrigValue`](#restoreOrigValue)
+* [`saveOriginalValue`](#saveOriginalValue)
+* [`restoreOriginalValueOnClear`](#restoreOriginalValueOnClear)
 
 <a name="inputProps"></a>
 #### inputProps
@@ -333,7 +333,7 @@ Type: `Function`
 Required: `false`
 Deafult: `noop`
 
-You can pass a callback function that gets called when pressing down Enter key when no item in the dropdown is selected.  
+You can pass a callback function that gets called when pressing down Enter key when no item in the dropdown is selected.
 The function takes one argument, the value in the input field.
 
 ```js
@@ -409,25 +409,26 @@ Default: `"default"`
 Allows you to pick right color theme for "powered by Google" logo.
 Please see Google's API page for more information: [https://developers.google.com/places/web-service/policies](https://developers.google.com/places/web-service/policies)
 
-<a name="includeInputValue"></a>
-#### includeInputValue
+<a name="saveOriginalValue"></a>
+#### saveOriginalValue
 Type: `Boolean`
 Required: `false`
 Default: `false`
 
-Enables storing original input value in local state, when you select some entry from autocomplete dropdown.
-When last entry is focused and you press down arrow (or vice versa with up arrow), instead of wrapping up,
-it doesn't focus on any of the entries, and instead shows original value in input field, which was saved to local state
-when any of entries was focused/selected and previously none of them were.
+Enables saving original input value, after you select some entry from autocomplete dropdown.
+When no entry from autocomplete is chosen and you move cursor / press arrow up/down to choose some,
+previous value is being saved. It's reused later when you're focused on last/first entry and you press down/up arrow.
+Instead of wrapping around and focusing on the next entry, none of them are being selected and old value for the input
+(which was saved earlier) is restored.
 
-<a name="restoreOrigValue"></a>
-#### restoreOrigValue
+<a name="restoreOriginalValueOnClear"></a>
+#### restoreOriginalValueOnClear
 Type: `Boolean`
 Required: `false`
 Default: `false`
 
-When firing method for clearing autocomplete, original value is restored in the input field, which was saved
-when none of the entries were chosen and you move cursor or press arrow up/down to choose one.
+Enables to restore input's value to one saved by `saveOriginalValue` prop when clearing autocomplete entries.
+It's triggered for example when you press escape key when one of the entries is selected.
 
 <a name="utility-functions"></a>
 ## Utility Functions

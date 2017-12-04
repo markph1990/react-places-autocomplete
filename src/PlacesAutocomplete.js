@@ -72,7 +72,7 @@ class PlacesAutocomplete extends Component {
 
   clearAutocomplete() {
     this.setState({ autocompleteItems: [] })
-    this.props.restoreOrigValue && this.props.inputProps.onChange(this.state.insertedInputValue);
+    this.props.restoreOriginalValueOnClear && this.props.inputProps.onChange(this.state.insertedInputValue);
   }
 
   selectAddress(address, placeId) {
@@ -121,7 +121,7 @@ class PlacesAutocomplete extends Component {
     if (activeItem === undefined) {
       this.setState({ insertedInputValue: this.props.inputProps.value })
       this.selectActiveItemAtIndex(0)
-    } else if (this.props.includeInputValue && activeItem.index === this.state.autocompleteItems.length - 1) {
+    } else if (this.props.saveOriginalValue && activeItem.index === this.state.autocompleteItems.length - 1) {
       this.setState({
         autocompleteItems: this.state.autocompleteItems.map((item, idx) => {
           return (activeItem.index === idx) ? {...item, active: false} : item
@@ -143,7 +143,7 @@ class PlacesAutocomplete extends Component {
     if (activeItem === undefined) {
       this.setState({ insertedInputValue: this.props.inputProps.value });
       this.selectActiveItemAtIndex(this.state.autocompleteItems.length - 1)
-    } else if (this.props.includeInputValue && activeItem.index === 0) {
+    } else if (this.props.saveOriginalValue && activeItem.index === 0) {
       this.setState({
         autocompleteItems: this.state.autocompleteItems.map((item, idx) => {
           return (activeItem.index === idx) ? {...item, active: false} : item
@@ -357,8 +357,8 @@ PlacesAutocomplete.propTypes = {
   highlightFirstSuggestion: PropTypes.bool,
   googleLogo: PropTypes.bool,
   googleLogoType: PropTypes.oneOf(["default", "inverse"]),
-  includeInputValue: PropTypes.bool,
-  restoreOrigValue: PropTypes.bool
+  saveOriginalValue: PropTypes.bool,
+  restoreOriginalValueOnClear: PropTypes.bool
 }
 
 PlacesAutocomplete.defaultProps = {
@@ -372,8 +372,8 @@ PlacesAutocomplete.defaultProps = {
   highlightFirstSuggestion: false,
   googleLogo: true,
   googleLogoType: 'default',
-  includeInputValue: false,
-  restoreOrigValue: false
+  saveOriginalValue: false,
+  restoreOriginalValueOnClear: false
 }
 
 export default PlacesAutocomplete
