@@ -13,7 +13,7 @@ class PlacesAutocomplete extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { autocompleteItems: [], insertedInputValue: "" }
+    this.state = { autocompleteItems: [], originalInputValue: "" }
 
     this.autocompleteCallback = this.autocompleteCallback.bind(this)
     this.handleInputKeyDown = this.handleInputKeyDown.bind(this)
@@ -72,7 +72,7 @@ class PlacesAutocomplete extends Component {
 
   clearAutocomplete() {
     this.setState({ autocompleteItems: [] })
-    this.props.restoreOriginalValueOnClear && this.props.inputProps.onChange(this.state.insertedInputValue);
+    this.props.restoreOriginalValueOnClear && this.props.inputProps.onChange(this.state.originalInputValue);
   }
 
   selectAddress(address, placeId) {
@@ -119,7 +119,7 @@ class PlacesAutocomplete extends Component {
 
     const activeItem = this.getActiveItem()
     if (activeItem === undefined) {
-      this.setState({ insertedInputValue: this.props.inputProps.value })
+      this.setState({ originalInputValue: this.props.inputProps.value })
       this.selectActiveItemAtIndex(0)
     } else if (this.props.saveOriginalValue && activeItem.index === this.state.autocompleteItems.length - 1) {
       this.setState({
@@ -127,7 +127,7 @@ class PlacesAutocomplete extends Component {
           return (activeItem.index === idx) ? {...item, active: false} : item
         })
       })
-      this.props.inputProps.onChange(this.state.insertedInputValue);
+      this.props.inputProps.onChange(this.state.originalInputValue);
     } else {
       const nextIndex = (activeItem.index + 1) % this.state.autocompleteItems.length
       this.selectActiveItemAtIndex(nextIndex)
@@ -141,7 +141,7 @@ class PlacesAutocomplete extends Component {
 
     const activeItem = this.getActiveItem()
     if (activeItem === undefined) {
-      this.setState({ insertedInputValue: this.props.inputProps.value });
+      this.setState({ originalInputValue: this.props.inputProps.value });
       this.selectActiveItemAtIndex(this.state.autocompleteItems.length - 1)
     } else if (this.props.saveOriginalValue && activeItem.index === 0) {
       this.setState({
@@ -149,7 +149,7 @@ class PlacesAutocomplete extends Component {
           return (activeItem.index === idx) ? {...item, active: false} : item
         })
       });
-      this.props.inputProps.onChange(this.state.insertedInputValue);
+      this.props.inputProps.onChange(this.state.originalInputValue);
     } else {
       let prevIndex
       if (activeItem.index === 0) {
