@@ -72,6 +72,7 @@ class PlacesAutocomplete extends Component {
 
   clearAutocomplete() {
     this.setState({ autocompleteItems: [] })
+    this.props.restoreOrigValue && this.props.inputProps.onChange(this.state.insertedInputValue);
   }
 
   selectAddress(address, placeId) {
@@ -176,7 +177,6 @@ class PlacesAutocomplete extends Component {
         break
       case 'Escape':
         this.clearAutocomplete()
-        this.props.clearOnEscape && this.props.inputProps.onChange(this.state.insertedInputValue);
         break
     }
 
@@ -358,7 +358,7 @@ PlacesAutocomplete.propTypes = {
   googleLogo: PropTypes.bool,
   googleLogoType: PropTypes.oneOf(["default", "inverse"]),
   includeInputValue: PropTypes.bool,
-  clearOnEscape: PropTypes.bool
+  restoreOrigValue: PropTypes.bool
 }
 
 PlacesAutocomplete.defaultProps = {
@@ -373,7 +373,7 @@ PlacesAutocomplete.defaultProps = {
   googleLogo: true,
   googleLogoType: 'default',
   includeInputValue: false,
-  clearOnEscape: false
+  restoreOrigValue: false
 }
 
 export default PlacesAutocomplete
