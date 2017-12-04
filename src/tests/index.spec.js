@@ -386,7 +386,7 @@ describe('save and include original input value when iterating over autocomplete
   it('save value of input when pressing arrow up key and none of autocomplete entries is being focused', () => {
     wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowUp', preventDefault: () => {}})
-    expect(wrapper.state().insertedInputValue).to.equal("san")
+    expect(wrapper.state().originalInputValue).to.equal("san")
   })
 
   it('don\'t focus on any entry when focus is on last item and arrow down key is pressed', () => {
@@ -414,7 +414,7 @@ describe('save and include original input value when iterating over autocomplete
   it('onChange function is fired with appropriate value', () => {
     // Amount of entries is 3 for this test case, so when we press arrow down fourth time
     // we expect onChange function to be called with original input value
-    // being stored in `insertedInputValue` state entry
+    // being stored in `originalInputValue` state entry
     // rest of calls should be called with appropraite entries from autocomplete items
     wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
@@ -424,14 +424,14 @@ describe('save and include original input value when iterating over autocomplete
     expect(spy.getCall(0).args[0]).to.equal(testAutocompleteData[0].suggestion)
     expect(spy.getCall(1).args[0]).to.equal(testAutocompleteData[1].suggestion)
     expect(spy.getCall(2).args[0]).to.equal(testAutocompleteData[2].suggestion)
-    expect(spy.getCall(3).args[0]).to.equal(wrapper.state().insertedInputValue)
+    expect(spy.getCall(3).args[0]).to.equal(wrapper.state().originalInputValue)
   })
 
-  it('clearing autocomplete will restore input to its original value (saved in local state as insertedInputValue)', () => {
+  it('clearing autocomplete will restore input to its original value (saved in local state as originalInputValue)', () => {
     wrapper.setState({ autocompleteItems: testAutocompleteData })
     wrapper.instance().handleInputKeyDown({key: 'ArrowDown', preventDefault: () => {}})
     wrapper.instance().handleInputKeyDown({key: 'Escape', preventDefault: () => {}})
-    expect(spy.getCall(1).args[0]).to.equal(wrapper.state().insertedInputValue)
+    expect(spy.getCall(1).args[0]).to.equal(wrapper.state().originalInputValue)
   })
 })
 
