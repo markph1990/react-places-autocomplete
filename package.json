@@ -1,6 +1,6 @@
 {
   "name": "@markph1990/react-places-autocomplete",
-  "version": "5.4.2",
+  "version": "5.4.3",
   "description": "A React component for Google Maps Places Autocomplete",
   "main": "dist/index.js",
   "scripts": {
@@ -12,13 +12,10 @@
     "build:main": "babel --copy-files --out-dir dist --ignore *.spec.js src",
     "build:umd": "webpack --output-filename index.umd.js",
     "build:umd.min": "webpack --output-filename index.umd.min.js -p",
-    "semantic-release":
-      "semantic-release pre && npm publish && semantic-release post",
-    "demo":
-      "webpack-dev-server --config demo/webpack.config.js --debug --content-base demo --inline --hot --colors",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "demo": "webpack-dev-server --config demo/webpack.config.js --debug --content-base demo --inline --hot --colors",
     "demo:test": "mocha demo/tests/index.spec.js --compilers js:babel-register",
-    "demo:build":
-      "rimraf demo/dist && webpack --config demo/webpack.config.js -p",
+    "demo:build": "rimraf demo/dist && webpack --config demo/webpack.config.js -p",
     "demo:deploy": "gh-pages -d demo/dist"
   },
   "repository": {
@@ -42,14 +39,16 @@
     "geocode",
     "geocoder"
   ],
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "author": "Ken Hibino <ken.hibino7@gmail.com> (http://www.kenhibino.com/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kenny-hibino/react-places-autocomplete/issues"
   },
-  "homepage":
-    "https://github.com/kenny-hibino/react-places-autocomplete#readme",
+  "homepage": "https://github.com/kenny-hibino/react-places-autocomplete#readme",
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-loader": "^6.3.2",
@@ -93,7 +92,11 @@
     }
   },
   "babel": {
-    "presets": ["es2015", "react", "stage-2"]
+    "presets": [
+      "es2015",
+      "react",
+      "stage-2"
+    ]
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
