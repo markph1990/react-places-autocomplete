@@ -1,6 +1,6 @@
 {
-  "name": "@markph1990/react-places-autocomplete",
-  "version": "5.4.3",
+  "name": "react-places-autocomplete",
+  "version": "5.4.2",
   "description": "A React component for Google Maps Places Autocomplete",
   "main": "dist/index.js",
   "scripts": {
@@ -16,11 +16,12 @@
     "demo": "webpack-dev-server --config demo/webpack.config.js --debug --content-base demo --inline --hot --colors",
     "demo:test": "mocha demo/tests/index.spec.js --compilers js:babel-register",
     "demo:build": "rimraf demo/dist && webpack --config demo/webpack.config.js -p",
-    "demo:deploy": "gh-pages -d demo/dist"
+    "demo:deploy": "gh-pages -d demo/dist",
+    "postpublish": "npm run demo:deploy"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/markph1990/react-places-autocomplete.git"
+    "url": "https://github.com/kenny-hibino/react-places-autocomplete.git"
   },
   "keywords": [
     "React.js",
