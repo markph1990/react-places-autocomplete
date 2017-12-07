@@ -72,7 +72,6 @@ class PlacesAutocomplete extends Component {
 
   clearAutocomplete() {
     this.setState({ autocompleteItems: [] })
-    this.props.restoreOriginalValueOnClear && this.props.inputProps.onChange(this.state.originalInputValue);
   }
 
   selectAddress(address, placeId) {
@@ -176,6 +175,7 @@ class PlacesAutocomplete extends Component {
         this.handleUpKey()
         break
       case 'Escape':
+        this.restoreOriginalValue()
         this.clearAutocomplete()
         break
     }
@@ -183,6 +183,10 @@ class PlacesAutocomplete extends Component {
     if (this.props.inputProps.onKeyDown) {
       this.props.inputProps.onKeyDown(event)
     }
+  }
+
+  restoreOriginalValue() {
+    this.props.restoreOriginalValueOnClear && this.props.inputProps.onChange(this.state.originalInputValue);
   }
 
   setActiveItemAtIndex(index) {
